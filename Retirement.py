@@ -1,4 +1,7 @@
-""" A program that prints a matrix of benefit amounts based on filing month """
+""" A program that prints a matrix of benefit amounts based on any filing month """
+
+import datetime
+import decimal
 
 # Step 1 - Introduce the program
 def introduction():
@@ -15,16 +18,19 @@ def introduction():
     print ("your chosen month of filing.")
 
 
-
-
-
-
-
 # Step 2 - Ascertain the user's date of birth, convert to date object
 def date_of_birth():
+
     """A function that takes user date of birth input, converts to date object"""
 
+    # User inputs date of birth (dob), store as variable "dob"
+    dob = input("What is your date of birth? (MM/DD/YYYY) ")
 
+    # Convert user input "dob" string into date object "birthdate"
+    birthdate = datetime.datetime.strptime(dob, "%m/%d/%Y").date()
+
+    # Subtract 1 day from the actual date of birth b/c of SSA legislative/actuarial rules
+    fra_dob = birthdate - datetime.timedelta(days=1)
 
 
 

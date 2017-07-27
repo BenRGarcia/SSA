@@ -1,7 +1,6 @@
-"""This is the Reduction Factor Tuple Dictionary for SSA Reduced Retirement Benefits"""
+"""This is the Reduction Factor tuple list for SSA Reduced Retirement Benefits"""
 
 # Source: POMS RS 00615.101
-# I prefer an ordered list of tuples
 reduction_factors = [
     (1, 179 / 180),
     (2, 178 / 180),
