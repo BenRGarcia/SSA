@@ -8,14 +8,13 @@ def introduction():
 
     """A function that introduces the program"""
 
-    print ("Welcome to the SSA Retirement Benefit Matrix Program!")
-    print ("This program will ask you for 2 things: and")
-    print ("1) Your date of birth (MM/DD/YYYY)")
-    print ("")
-    print ('"Primary Insurance Amount" according to SSA.')
-    print ("In return, the program with return a matrix contains")
-    print ("all possible monthly benefit amounts depending on")
-    print ("your chosen month of filing.")
+    print ("=" * 54 + " Welcome to the SSA Retirement Benefit Matrix Program!" + "=" * 54)
+    print ("\n\nThis program will ask you for 2 things:")
+    print ("\n\t1) Your date of birth (MM/DD/YYYY)")
+    print ('\n\t2) Your "Primary Insurance Amount" according to SSA.')
+    print ("\n\nIn return, the program with return a matrix which contains")
+    print ("all possible monthly benefit amounts depending on your")
+    print ("chosen month of filing.")
 
 
 # Step 2 - Ascertain the user's date of birth, convert to date object
