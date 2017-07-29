@@ -1,0 +1,17 @@
+================================================
+        SSA Retirement Benefit Estimator
+================================================
+
+Welcome to the SSA Retirement Benefit Estimator!
+
+  This program will ask you for 2 things:
+      1) Your date of birth (MM/DD/YYYY)
+      2) Your SSA 'Primary Insurance Amount'
+
+  In return, you will receive a printout of all
+  possible benefit amounts depending on your
+  chosen month of filing.
+
+  You can use this benefit estimate printout to
+  help you decide what may be the best month
+  to start your SSA Retirement Benefits.
