@@ -1,35 +1,41 @@
-""" A program that prints a matrix of benefit amounts based on any filing month """
+""" A program that prints a matrix of benefit amounts based on filing month """
+# Run this program in BASH with $ python3 Retirement.py welcome.txt
+#import datetime
+#import decimal
+from sys import argv
+script, file_1 = argv
 
-import datetime
-import decimal
 
-# Step 1 - Introduce the program
-def introduction():
+def introduction(x):
 
     """A function that introduces the program"""
 
-    print ("=" * 54 + " Welcome to the SSA Retirement Benefit Matrix Program!" + "=" * 54)
-    print ("\n\nThis program will ask you for 2 things:")
-    print ("\n\t1) Your date of birth (MM/DD/YYYY)")
-    print ('\n\t2) Your "Primary Insurance Amount" according to SSA.')
-    print ("\n\nIn return, the program with return a matrix which contains")
-    print ("all possible monthly benefit amounts depending on your")
-    print ("chosen month of filing.")
+    # Clear the user's terminal screen
+    print("\033c")
+
+    # Open welcome.txt, print to terminal
+    open_x = open(x)
+    print(open_x.read())
+    open_x.close()
+
+    # Prompt user to continue
+    input("\n\nPress ENTER key to continue\n>>>")
+
 
 
 # Step 2 - Ascertain the user's date of birth, convert to date object
-def date_of_birth():
+# def date_of_birth():
 
     """A function that takes user date of birth input, converts to date object"""
 
     # User inputs date of birth (dob), store as variable "dob"
-    dob = input("What is your date of birth? (MM/DD/YYYY) ")
+    #dob = input("What is your date of birth? (MM/DD/YYYY) ")
 
     # Convert user input "dob" string into date object "birthdate"
-    birthdate = datetime.datetime.strptime(dob, "%m/%d/%Y").date()
+    #birthdate = datetime.datetime.strptime(dob, "%m/%d/%Y").date()
 
     # Subtract 1 day from the actual date of birth b/c of SSA legislative/actuarial rules
-    fra_dob = birthdate - datetime.timedelta(days=1)
+    #fra_dob = birthdate - datetime.timedelta(days=1)
 
 
 
@@ -38,7 +44,7 @@ def date_of_birth():
 
 
 # Step 3 - Ascertain the user's "Primary Insurance Amount" according to SSA
-def ssa_pia():
+#def ssa_pia():
     """A function that takes user input of SSA's PIA and converts to decimal object"""
     # Must use "decimal" module when working with money!!!
 
@@ -50,7 +56,7 @@ def ssa_pia():
 
 
 # Step 4 - Perform Calculations
-def calculations():
+#def calculations():
     """A function that calculates SSA Retirement benefit matrix"""
     # Integrate use of "fraction" module
     # Account for SSA's rounding
@@ -62,5 +68,13 @@ def calculations():
 
 
 # Step 5 - Present the benefit estimate in a comprehensible format
-def benefit_matrix():
+#def benefit_matrix():
     """A function that presents the SSA Retirement benefit matrix"""
+
+
+
+
+
+# Call functions below
+
+introduction(file_1)
