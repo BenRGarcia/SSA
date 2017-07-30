@@ -2,7 +2,7 @@
 # Run this program in BASH with: $ python3 Retirement.py welcome.txt
 
 import datetime
-#import decimal
+from decimal import Decimal
 from sys import argv
 script, file_1 = argv
 
@@ -125,17 +125,17 @@ def fra_mm_yyyy(a):
         return fra_month, fra_year
 
 
-# Step 3 - Ascertain the user's "Primary Insurance Amount" according to SSA
-#def ssa_pia():
-    #"""A function that takes user input of SSA's PIA and converts to decimal object"""
+def ssa_pia():
+    """A function that takes user input of SSA's PIA and converts to decimal object"""
     # Must use "decimal" module when working with money!!!
 
-# Step 4 - Take date of birth date object and return full retirement age
+    pia =
+
 
 # Step 4 - Perform Calculations
 #def calculations():
     """A function that calculates SSA Retirement benefit matrix"""
-    # Integrate use of "fraction" module
+    # Integrate use of "fraction" module?
     # Account for SSA's rounding
     # Send results to .txt file?
 
@@ -148,9 +148,6 @@ introduction(file_1)                     # Print introduction .txt to terminal
 fra_dob = date_of_birth()                # Call function to get user's date of birth, declare fra_dob
 months_to_fra = months_to_fra(fra_dob)   # Call function to return user's # of month until FRA
 fra_month, fra_year = fra_mm_yyyy(months_to_fra) # Call function to return user's FRA (MM/YYYY)
-print("Yo! FRA month/year is:", fra_month, fra_year)
-
-
-
-#fra_month_day_year = str(fra_month) + "/" + str(fra_dob.day) + "/" + str(fra_year)  # Concatenate strings to later convert to date object
-#fra_date_object = datetime.datetime.strptime(fra_month_day_year, "%m/%d/%Y").date() # Convert string object to date object
+fra_mm_yy = str(fra_month) + "/" + str(fra_year) # Concatenate string to later convert to date object
+fra_mm_yy_date_obj = datetime.datetime.strptime(fra_mm_yy, "%m/%Y").date()
+print ("According to SSA, your full retirement month and year is:", fra_mm_yy_date_obj.strftime('%B %Y'))
