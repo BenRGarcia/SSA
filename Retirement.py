@@ -1,5 +1,6 @@
 """ A program that prints a matrix of benefit amounts based on filing month """
-# Run this program in BASH with $ python3 Retirement.py welcome.txt
+# Run this program in BASH with: $ python3 Retirement.py welcome.txt
+
 import FullRetirementAge
 import datetime
 #import decimal
@@ -31,7 +32,7 @@ def date_of_birth():
     # User inputs date of birth (dob), store as variable "dob"
     actual_dob = input("What is your date of birth? (MM/DD/YYYY)\n>>>")
 
-    # Test user input for valid date format
+    # Test user input for valid date of birth date format
     try:
         valid_dob = datetime.datetime.strptime(actual_dob, "%m/%d/%Y")
     except ValueError:
@@ -43,29 +44,91 @@ def date_of_birth():
     else:
 
         # Convert user input "dob" string into date object "birthdate"
-        birthdate = datetime.datetime.strptime(actual_dob, "%m/%d/%Y").date()
+        dob_date_obj = datetime.datetime.strptime(actual_dob, "%m/%d/%Y").date()
 
         # Subtract 1 day from the actual date of birth b/c of SSA legislative/actuarial rules
-        fra_dob = birthdate - datetime.timedelta(days=1)
+        fra_dob = dob_date_obj - datetime.timedelta(days=1)
 
         return fra_dob
 
 
-def full_retirement_age(y):
-    """A function that returns the full retirement age (MM/YYYY) according to SSA"""
+def months_to_fra(z): # Apologies, this function is verbose--Function modeled after SSA regulations
+    """A function that returns the SSA full retirement age (FRA) as measured in months"""
 
-    print(FullRetirementAge.fra_chart(y))
+    # If date of birth is 1/1/1938 or earlier, full retirement age (FRA) is 65
+    if z < datetime.date(1938, 1, 2):
+        months_to_fra = 780
+
+    # If date of birth is between 1/2/1938 and 1/1/1939, full retirement age (FRA) is age 65 + 2 months
+    elif z < datetime.date(1939, 1, 2):
+        months_to_fra = 782
+
+    # If date of birth is between 1/2/1939 and 1/1/1940, full retirement age (FRA) is age 65 + 4 months
+    elif z < datetime.date(1940, 1, 2):
+        months_to_fra = 784
+
+    # If date of birth is between 1/2/1940 and 1/1/1941, then full retirement age (FRA) is age 65 + 6 months
+    elif z < datetime.date(1941, 1, 2):
+        months_to_fra = 786
+
+    # If date of birth is between 1/2/1941 and 1/1/1942, then full retirement age (FRA) is age 65 + 8 months
+    elif z < datetime.date(1942, 1, 2):
+        months_to_fra = 788
+
+    # If date of birth is between 1/2/1942 and 1/1/1943, then full retirement age (FRA) is age 65 + 10 months
+    elif z < datetime.date(1943, 1, 2):
+        months_to_fra = 790
+
+    # If date of birth is between 1/2/1943 and 1/1/1955, then full retirement age (FRA) is age 66
+    elif z < datetime.date(1955, 1, 2):
+        months_to_fra = 792
+
+    # If date of birth is between 1/2/1955 and 1/1/1956, then full retirement age (FRA) is age 66 + 2 months
+    elif z < datetime.date(1956, 1, 2):
+        months_to_fra = 794
+
+    # If date of birth is between 1/2/1956 and 1/1/1957, then full retirement age (FRA) is age 66 + 4 months
+    elif z < datetime.date(1957, 1, 2):
+        months_to_fra = 796
+
+    # If date of birth is between 1/2/1957 and 1/1/1958, then full retirement age (FRA) is age 66 + 6 months
+    elif z < datetime.date(1958, 1, 2):
+        months_to_fra = 798
+
+    # If date of birth is between 1/2/1958 and 1/1/1959, then full retirement age (FRA) is age 66 + 8 months
+    elif z < datetime.date(1959, 1, 2):
+        months_to_fra = 800
+
+    # If date of birth is between 1/2/1959 and 1/1/1960, then full retirement age (FRA) is age 66 + 10 months
+    elif z < datetime.date(1960, 1, 2):
+        months_to_fra = 802
+
+    # If date of birth is 1/2/1960 or later, then your full retirement age (FRA) is age 67
+    else:
+        months_to_fra = 804
+
+    return months_to_fra
 
 
+#def fra_mm_yyyy(a): # A function that makes certain month integer remains between 1 and 12, returns integer of calendar month of Full Retirement Age (FRA)
+  #remainder_months = fra_chart(z) % 12
+  #if fra_dob.month + remainder_months <= 12:
+    #return remainder_months
+  #else:
+    #remainder_months = fra_dob.months + remainder_months - 12
+    #return remainder_months
+
+    #fra_month = fra_dob.month + fra_month_calc()                                        # Declares a variable to store value of Full Retirement Age (FRA) month
+    #fra_year = fra_dob.year + (fra_chart(fra_dob) // 12)                                # Declares a variable to store value of Full Retirement Age (FRA) year
+    #fra_month_day_year = str(fra_month) + "/" + str(fra_dob.day) + "/" + str(fra_year)  # Concatenate strings to later convert to date object
+    #fra_date_object = datetime.datetime.strptime(fra_month_day_year, "%m/%d/%Y").date() # Convert string object to date object
 
 # Step 3 - Ascertain the user's "Primary Insurance Amount" according to SSA
 #def ssa_pia():
     #"""A function that takes user input of SSA's PIA and converts to decimal object"""
     # Must use "decimal" module when working with money!!!
 
-
 # Step 4 - Take date of birth date object and return full retirement age
-
 
 # Step 4 - Perform Calculations
 #def calculations():
@@ -74,13 +137,12 @@ def full_retirement_age(y):
     # Account for SSA's rounding
     # Send results to .txt file?
 
-
 # Step 5 - Present the benefit estimate in a comprehensible format
 #def benefit_matrix():
     """A function that presents the SSA Retirement benefit matrix"""
 
-
 # Call functions below
-introduction(file_1)          # Print introduction .txt to terminal
-fra_dob = date_of_birth()     # Call function to get user's date of birth, create global fra_dob
-months_to_fra = full_retirement_age(fra_dob)  # Call function to return user's full retirement age
+introduction(file_1)                    # Print introduction .txt to terminal
+fra_dob = date_of_birth()               # Call function to get user's date of birth, declare fra_dob
+months_to_fra = months_to_fra(fra_dob)  # Call function to return user's full retirement age
+#fra_mm_yyyy = fra_mm_yyyy(months_to_fra)
