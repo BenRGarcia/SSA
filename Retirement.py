@@ -7,22 +7,22 @@ from sys import argv
 script, file_1 = argv
 
 
-def introduction(x):
+def introduction(a):
     """A function that introduces the program"""
 
     # Clear the user's terminal screen
     print("\033c")
 
     # Open .txt file, print to terminal, close .txt file
-    open_x = open(x)
-    print(open_x.read())
-    open_x.close()
+    open_a = open(a)
+    print(open_a.read())
+    open_a.close()
 
     # Prompt user to continue
     input("\n\nPress the ENTER key to continue\n>>>")
 
 
-def date_of_birth():
+def dob_input():
     """A function that takes user date of birth input, converts to date object"""
 
     # Clear the user's terminal screen
@@ -31,16 +31,24 @@ def date_of_birth():
     # Get user's date of birth
     dob = input("What is your date of birth? (MM/DD/YYYY)\n>>>")
 
-    # Test user input for valid date of birth date format, convert to date object
+    # Call function that tests for valid dob
+    test_dob_input(dob)
+
+
+def test_dob_input(b):
+    """A function that checks the validity of user date of birth input"""
+
     try:
-        valid_dob = datetime.datetime.strptime(dob, "%m/%d/%Y").date()
-        fra_dob = valid_dob - datetime.timedelta(days=1)
-        return fra_dob # Return date of birth less one day due to SSA regulations
+        valid_dob = datetime.datetime.strptime(b, "%m/%d/%Y").date()
+        convert_to_fra_dob(valid_dob)
     except:
         print("\nSorry, that's not a valid date. You must use the MM/DD/YYYY format.")
         input("\nPress the ENTER key to try again.\n>>>")
-        date_of_birth()
+        dob_input()
 
+def convert_to_fra_dob(y):
+    fra_dob = y - datetime.timedelta(days=1)
+    months_to_fra(fra_dob)
 
 def months_to_fra(z): # Apologies, this function is verbose--function modeled after SSA regulations
     """A function that returns the number of months to SSA full retirement age (FRA)"""
@@ -97,6 +105,7 @@ def months_to_fra(z): # Apologies, this function is verbose--function modeled af
     else:
         months_to_fra = 804
 
+    print ("it worked! months to fra =", months_to_fra)
     return months_to_fra
 
 
@@ -150,9 +159,28 @@ def ssa_pia():
 #def benefit_matrix():
     """A function that presents the SSA Retirement benefit matrix"""
 
-# Call functions below
-introduction(file_1)                     # Print introduction .txt to terminal
-fra_dob = date_of_birth()                # Call function to get user's date of birth, declare fra_dob
+def main():
+    """A function that runs the show for this program"""
+
+    # Print introduction .txt to terminal
+    introduction(file_1)
+
+    while True:
+        dob_input()
+        if months_to_fra != None:
+            break
+
+    print("you broke outta the while loop, yay!")
+
+
+main()
+
+
+
+
+
+#fra_dob = date_of_birth()                # Call function to get user's date of birth, declare fra_dob
+#fra_dob = valid_dob(dob)
 #months_to_fra = months_to_fra(fra_dob)   # Call function to return user's # of month until FRA
 #fra_month, fra_year = fra_mm_yyyy(months_to_fra) # Call function to return user's FRA (MM/YYYY)
 # ssa_pia()
