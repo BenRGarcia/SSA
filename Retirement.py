@@ -34,7 +34,7 @@ def date_of_birth():
     # Test user input for valid date of birth date format
     try:
         valid_dob = datetime.datetime.strptime(actual_dob, "%m/%d/%Y")
-    except ValueError:
+    except:
         print("\nSorry, that's not a valid date. You must use the MM/DD/YYYY format.")
         input("\nPress the ENTER key to try again.\n>>>")
         date_of_birth()
@@ -43,7 +43,7 @@ def date_of_birth():
     else:
 
         # Convert user input "dob" string into date object "birthdate"
-        dob_date_obj = datetime.datetime.strptime(actual_dob, "%m/%d/%Y").date()
+        dob_date_obj = datetime.datetime.strptime(actual_dob, "%m/%d/%Y")
 
         # Subtract 1 day from the actual date of birth b/c of SSA legislative/actuarial rules
         fra_dob = dob_date_obj - datetime.timedelta(days=1)
@@ -127,9 +127,25 @@ def fra_mm_yyyy(a):
 
 def ssa_pia():
     """A function that takes user input of SSA's PIA and converts to decimal object"""
-    # Must use "decimal" module when working with money!!!
 
-    pia =
+    # Clear the user's terminal screen
+    print("\033c")
+
+    # Get user input of Primary Insurance Amount (PIA)
+    pia = input("What is your Primary Insurance Amount (PIA) according to SSA? ($XXXX.xx)\n>>> $")
+
+    # Test user input for valid PIA format
+    try:
+        valid_pia = Decimal(pia)
+    except ValueError:
+        print("\nSorry, that's not a valid PIA amount. You must use the $XXXX.xx format.")
+        input("\nPress the ENTER key to try again.\n>>>")
+        ssa_pia()
+
+    # Convert user input to a decimal object
+    else:
+        ssa_pia = Decimal(pia)
+        print("$" + str(ssa_pia))
 
 
 # Step 4 - Perform Calculations
@@ -148,6 +164,8 @@ introduction(file_1)                     # Print introduction .txt to terminal
 fra_dob = date_of_birth()                # Call function to get user's date of birth, declare fra_dob
 months_to_fra = months_to_fra(fra_dob)   # Call function to return user's # of month until FRA
 fra_month, fra_year = fra_mm_yyyy(months_to_fra) # Call function to return user's FRA (MM/YYYY)
+ssa_pia()
+
 fra_mm_yy = str(fra_month) + "/" + str(fra_year) # Concatenate string to later convert to date object
 fra_mm_yy_date_obj = datetime.datetime.strptime(fra_mm_yy, "%m/%Y").date()
 print ("According to SSA, your full retirement month and year is:", fra_mm_yy_date_obj.strftime('%B %Y'))
