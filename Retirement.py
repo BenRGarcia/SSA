@@ -1,7 +1,6 @@
 """ A program that prints a matrix of benefit amounts based on filing month """
 # Run this program in BASH with: $ python3 Retirement.py welcome.txt
 
-import FullRetirementAge
 import datetime
 #import decimal
 from sys import argv
@@ -52,8 +51,8 @@ def date_of_birth():
         return fra_dob
 
 
-def months_to_fra(z): # Apologies, this function is verbose--Function modeled after SSA regulations
-    """A function that returns the SSA full retirement age (FRA) as measured in months"""
+def months_to_fra(z): # Apologies, this function is verbose--function modeled after SSA regulations
+    """A function that returns the number of months to SSA full retirement age (FRA)"""
 
     # If date of birth is 1/1/1938 or earlier, full retirement age (FRA) is 65
     if z < datetime.date(1938, 1, 2):
@@ -110,18 +109,21 @@ def months_to_fra(z): # Apologies, this function is verbose--Function modeled af
     return months_to_fra
 
 
-#def fra_mm_yyyy(a): # A function that makes certain month integer remains between 1 and 12, returns integer of calendar month of Full Retirement Age (FRA)
-  #remainder_months = fra_chart(z) % 12
-  #if fra_dob.month + remainder_months <= 12:
-    #return remainder_months
-  #else:
-    #remainder_months = fra_dob.months + remainder_months - 12
-    #return remainder_months
+def fra_mm_yyyy(a):
+    """A function that returns MM/YYYY of user's full retirement age (FRA)"""
 
-    #fra_month = fra_dob.month + fra_month_calc()                                        # Declares a variable to store value of Full Retirement Age (FRA) month
-    #fra_year = fra_dob.year + (fra_chart(fra_dob) // 12)                                # Declares a variable to store value of Full Retirement Age (FRA) year
-    #fra_month_day_year = str(fra_month) + "/" + str(fra_dob.day) + "/" + str(fra_year)  # Concatenate strings to later convert to date object
-    #fra_date_object = datetime.datetime.strptime(fra_month_day_year, "%m/%d/%Y").date() # Convert string object to date object
+    # Calculate year of full retirement age (FRA)
+    fra_year = fra_dob.year + (months_to_fra // 12)
+
+    # Calculate FRA month, make sure it's between 1 and 12 (a valid calendar month)
+    if (fra_dob.month + (a % 12)) <= 12:
+        fra_month = fra_dob.month + (a % 12)
+        return fra_month, fra_year
+
+    else:
+        fra_month = fra_dob.month + (a % 12) - 12
+        return fra_month, fra_year
+
 
 # Step 3 - Ascertain the user's "Primary Insurance Amount" according to SSA
 #def ssa_pia():
@@ -142,7 +144,13 @@ def months_to_fra(z): # Apologies, this function is verbose--Function modeled af
     """A function that presents the SSA Retirement benefit matrix"""
 
 # Call functions below
-introduction(file_1)                    # Print introduction .txt to terminal
-fra_dob = date_of_birth()               # Call function to get user's date of birth, declare fra_dob
-months_to_fra = months_to_fra(fra_dob)  # Call function to return user's full retirement age
-#fra_mm_yyyy = fra_mm_yyyy(months_to_fra)
+introduction(file_1)                     # Print introduction .txt to terminal
+fra_dob = date_of_birth()                # Call function to get user's date of birth, declare fra_dob
+months_to_fra = months_to_fra(fra_dob)   # Call function to return user's # of month until FRA
+fra_month, fra_year = fra_mm_yyyy(months_to_fra) # Call function to return user's FRA (MM/YYYY)
+print("Yo! FRA month/year is:", fra_month, fra_year)
+
+
+
+#fra_month_day_year = str(fra_month) + "/" + str(fra_dob.day) + "/" + str(fra_year)  # Concatenate strings to later convert to date object
+#fra_date_object = datetime.datetime.strptime(fra_month_day_year, "%m/%d/%Y").date() # Convert string object to date object
