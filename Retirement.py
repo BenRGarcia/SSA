@@ -46,9 +46,11 @@ def test_dob_input(b):
         input("\nPress the ENTER key to try again.\n>>>")
         dob_input()
 
-def convert_to_fra_dob(y):
-    fra_dob = y - datetime.timedelta(days=1)
+
+def convert_to_fra_dob(c):
+    fra_dob = c - datetime.timedelta(days=1)
     months_to_fra(fra_dob)
+
 
 def months_to_fra(z): # Apologies, this function is verbose--function modeled after SSA regulations
     """A function that returns the number of months to SSA full retirement age (FRA)"""
@@ -105,23 +107,27 @@ def months_to_fra(z): # Apologies, this function is verbose--function modeled af
     else:
         months_to_fra = 804
 
-    print ("it worked! months to fra =", months_to_fra)
+    #Call function that returns full retirement age (FRA) MM/YYYY
+    #fra_mm_yyyy(months_to_fra)
+
     return months_to_fra
 
 
-def fra_mm_yyyy(a):
+def fra_mm_yyyy(e):
     """A function that returns MM/YYYY of user's full retirement age (FRA)"""
 
     # Calculate year of full retirement age (FRA)
     fra_year = fra_dob.year + (months_to_fra // 12)
 
     # Calculate FRA month, make sure it's between 1 and 12 (a valid calendar month)
-    if (fra_dob.month + (a % 12)) <= 12:
+    if (fra_dob.month + (e % 12)) <= 12:
         fra_month = fra_dob.month + (a % 12)
+        print("If statement:", fra_month, fra_year)
         return fra_month, fra_year
 
     else:
-        fra_month = fra_dob.month + (a % 12) - 12
+        fra_month = fra_dob.month + (e % 12) - 12
+        print("else statement:", fra_month, fra_year)
         return fra_month, fra_year
 
 
@@ -170,20 +176,15 @@ def main():
         if months_to_fra != None:
             break
 
-    print("you broke outta the while loop, yay!")
+    print("yay!")
+
+
+
 
 
 main()
 
 
-
-
-
-#fra_dob = date_of_birth()                # Call function to get user's date of birth, declare fra_dob
-#fra_dob = valid_dob(dob)
-#months_to_fra = months_to_fra(fra_dob)   # Call function to return user's # of month until FRA
-#fra_month, fra_year = fra_mm_yyyy(months_to_fra) # Call function to return user's FRA (MM/YYYY)
-# ssa_pia()
 
 #fra_mm_yy = str(fra_month) + "/" + str(fra_year) # Concatenate string to later convert to date object
 #fra_mm_yy_date_obj = datetime.datetime.strptime(fra_mm_yy, "%m/%Y").date()
