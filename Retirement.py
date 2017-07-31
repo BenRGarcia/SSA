@@ -204,7 +204,7 @@ fra_mm_yy_date_obj = fra_mm_yyyy(months_to_fra)
 
 pia_engine()
 
-
+print("\033c")
 print("According to SSA, based on your date of birth:", actual_dob.strftime("%B %d, %Y"))
-print ("\nYour full retirement month and year is:\n\n\t\t", fra_mm_yy_date_obj.strftime('%B %Y'))
-print("\nAnd your Primary Insurance Amount is:\n\n\t\t", ssa_pia)
+print ("\nYour full retirement age is:\n\n\t\t" + fra_mm_yy_date_obj.strftime('%B %Y'))
+print("\nAnd your Primary Insurance Amount is:\n\n\t\t${:,.2f}".format(ssa_pia))
