@@ -48,8 +48,9 @@ def test_dob_input(b):
 
 
 def convert_to_fra_dob(c):
+    global fra_dob
     fra_dob = c - datetime.timedelta(days=1)
-    months_to_fra(fra_dob)
+    #months_to_fra(fra_dob)
 
 
 def months_to_fra(z): # Apologies, this function is verbose--function modeled after SSA regulations
@@ -107,9 +108,6 @@ def months_to_fra(z): # Apologies, this function is verbose--function modeled af
     else:
         months_to_fra = 804
 
-    #Call function that returns full retirement age (FRA) MM/YYYY
-    #fra_mm_yyyy(months_to_fra)
-
     return months_to_fra
 
 
@@ -121,14 +119,16 @@ def fra_mm_yyyy(e):
 
     # Calculate FRA month, make sure it's between 1 and 12 (a valid calendar month)
     if (fra_dob.month + (e % 12)) <= 12:
-        fra_month = fra_dob.month + (a % 12)
-        print("If statement:", fra_month, fra_year)
-        return fra_month, fra_year
+        fra_month = fra_dob.month + (e % 12)
+        fra_mm_yy = str(fra_month) + "/" + str(fra_year) # Concatenate string to later convert to date object
+        fra_mm_yy_date_obj = datetime.datetime.strptime(fra_mm_yy, "%m/%Y").date()
+        return fra_mm_yy_date_obj
 
     else:
         fra_month = fra_dob.month + (e % 12) - 12
-        print("else statement:", fra_month, fra_year)
-        return fra_month, fra_year
+        fra_mm_yy = str(fra_month) + "/" + str(fra_year) # Concatenate string to later convert to date object
+        fra_mm_yy_date_obj = datetime.datetime.strptime(fra_mm_yy, "%m/%Y").date()
+        return fra_mm_yy_date_obj
 
 
 def ssa_pia():
@@ -165,27 +165,29 @@ def ssa_pia():
 #def benefit_matrix():
     """A function that presents the SSA Retirement benefit matrix"""
 
-def main():
+def dob_engine():
     """A function that runs the show for this program"""
-
-    # Print introduction .txt to terminal
-    introduction(file_1)
 
     while True:
         dob_input()
-        if months_to_fra != None:
+        if fra_dob != None:
             break
 
-    print("yay!")
 
+# Declare global variable, initialized for value: None
+fra_dob = None
 
+# Print introduction .txt to terminal
+introduction(file_1)
 
+# Call function that asks user for valid date of birth value until one is given
+dob_engine()
 
+# Call function that calculates how many months until full retirement age (FRA)
+months_to_fra = months_to_fra(fra_dob)
 
-main()
+# Call function that adds month to (FRA) to the SSA date of birth (fra_dob)
+fra_mm_yy_date_obj = fra_mm_yyyy(months_to_fra)
 
-
-
-#fra_mm_yy = str(fra_month) + "/" + str(fra_year) # Concatenate string to later convert to date object
-#fra_mm_yy_date_obj = datetime.datetime.strptime(fra_mm_yy, "%m/%Y").date()
-#print ("According to SSA, your full retirement month and year is:", fra_mm_yy_date_obj.strftime('%B %Y'))
+print(fra_mm_yy_date_obj)
+print ("According to SSA, your full retirement month and year is:\n\n\t\t", fra_mm_yy_date_obj.strftime('%B %Y'))
