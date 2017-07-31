@@ -133,7 +133,16 @@ def fra_mm_yyyy(e):
         return fra_mm_yy_date_obj
 
 
-def ssa_pia():
+def dob_engine():
+    """A function that forces valid date of birth input from user"""
+
+    while True:
+        dob_input()
+        if fra_dob != None:
+            break
+
+
+def pia_input():
     """A function that takes user input of SSA's PIA and converts to decimal object"""
 
     # Clear the user's terminal screen
@@ -145,15 +154,23 @@ def ssa_pia():
     # Test user input for valid PIA format
     try:
         valid_pia = Decimal(pia)
-    except ValueError:
+        convert_to_decimal(valid_pia)
+    except:
         print("\nSorry, that's not a valid PIA amount. You must use the $XXXX.xx format.")
         input("\nPress the ENTER key to try again.\n>>>")
-        ssa_pia()
+        pia_input()
 
-    # Convert user input to a decimal object
-    else:
-        ssa_pia = Decimal(pia)
-        print("$" + str(ssa_pia))
+def convert_to_decimal(f):
+    global ssa_pia
+    ssa_pia = Decimal(f)
+
+def pia_engine():
+    """A function that forces valid PIA input from user"""
+
+    while True:
+        pia_input()
+        if ssa_pia != None:
+            break
 
 
 # Step 4 - Perform Calculations
@@ -167,18 +184,14 @@ def ssa_pia():
 #def benefit_matrix():
     """A function that presents the SSA Retirement benefit matrix"""
 
-def dob_engine():
-    """A function that runs the show for this program"""
-
-    while True:
-        dob_input()
-        if fra_dob != None:
-            break
 
 
-# Declare global variable, initialized for value: None
+
+
+# Declare global variables, initialized for value: None (methods will update)
 fra_dob = None
 actual_dob = None
+ssa_pia = None
 
 # Print introduction .txt to terminal
 introduction(file_1)
@@ -192,7 +205,9 @@ months_to_fra = months_to_fra(fra_dob)
 # Call function that adds month to (FRA) to the SSA date of birth (fra_dob)
 fra_mm_yy_date_obj = fra_mm_yyyy(months_to_fra)
 
+pia_engine()
 
-print("\033c")
+
 print("According to SSA, based on your date of birth:", actual_dob.strftime("%B %d, %Y"))
-print ("\nYour full retirement month and year is:\n\n\t\t", fra_mm_yy_date_obj.strftime('%B %Y'), "\n")
+print ("\nYour full retirement month and year is:\n\n\t\t", fra_mm_yy_date_obj.strftime('%B %Y'))
+print("\nAnd your Primary Insurance Amount is:\n\n\t\t", ssa_pia)
