@@ -185,9 +185,6 @@ def pia_engine():
     """A function that presents the SSA Retirement benefit matrix"""
 
 
-
-
-
 # Declare global variables, initialized for value: None (methods will update)
 fra_dob = None
 actual_dob = None
