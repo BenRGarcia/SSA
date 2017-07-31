@@ -52,7 +52,6 @@ def convert_to_fra_dob(c):
     actual_dob = c
     global fra_dob
     fra_dob = c - datetime.timedelta(days=1)
-    #months_to_fra(fra_dob)
 
 
 def months_to_fra(z): # Apologies, this function is verbose--function modeled after SSA regulations
@@ -160,9 +159,15 @@ def pia_input():
         input("\nPress the ENTER key to try again.\n>>>")
         pia_input()
 
+
 def convert_to_decimal(f):
+    """A function that converts PIA to a Decimal type"""
+
     global ssa_pia
     ssa_pia = Decimal(f)
+    global string_ssa_pia
+    string_ssa_pia = str(ssa_pia)
+
 
 def pia_engine():
     """A function that forces valid PIA input from user"""
@@ -185,11 +190,6 @@ def pia_engine():
     """A function that presents the SSA Retirement benefit matrix"""
 
 
-# Declare global variables, initialized for value: None (methods will update)
-fra_dob = None
-actual_dob = None
-ssa_pia = None
-
 # Print introduction .txt to terminal
 introduction(file_1)
 
@@ -207,4 +207,4 @@ pia_engine()
 print("\033c")
 print("According to SSA, based on your date of birth:", actual_dob.strftime("%B %d, %Y"))
 print ("\nYour full retirement age is:\n\n\t\t" + fra_mm_yy_date_obj.strftime('%B %Y'))
-print("\nAnd your Primary Insurance Amount is:\n\n\t\t${:,.2f}".format(ssa_pia))
+print("\nAnd your Primary Insurance Amount is:\n\n\t\t$" + string_ssa_pia)
