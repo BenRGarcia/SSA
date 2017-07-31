@@ -48,6 +48,8 @@ def test_dob_input(b):
 
 
 def convert_to_fra_dob(c):
+    global actual_dob
+    actual_dob = c
     global fra_dob
     fra_dob = c - datetime.timedelta(days=1)
     #months_to_fra(fra_dob)
@@ -176,6 +178,7 @@ def dob_engine():
 
 # Declare global variable, initialized for value: None
 fra_dob = None
+actual_dob = None
 
 # Print introduction .txt to terminal
 introduction(file_1)
@@ -189,5 +192,7 @@ months_to_fra = months_to_fra(fra_dob)
 # Call function that adds month to (FRA) to the SSA date of birth (fra_dob)
 fra_mm_yy_date_obj = fra_mm_yyyy(months_to_fra)
 
-print(fra_mm_yy_date_obj)
-print ("According to SSA, your full retirement month and year is:\n\n\t\t", fra_mm_yy_date_obj.strftime('%B %Y'))
+
+print("\033c")
+print("According to SSA, based on your date of birth:", actual_dob.strftime("%B %d, %Y"))
+print ("\nYour full retirement month and year is:\n\n\t\t", fra_mm_yy_date_obj.strftime('%B %Y'), "\n")
