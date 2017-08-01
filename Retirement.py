@@ -11,7 +11,7 @@ def introduction(a):
     """A function that introduces the program"""
 
     # Clear the user's terminal screen
-    print("\033c")
+    #print("\033c")
 
     # Open .txt file, print to terminal, close .txt file
     open_a = open(a)
@@ -67,6 +67,9 @@ def convert_to_fra_dob(c):
 def fra_months(z): # Apologies, this function is verbose--function modeled after SSA regulations
     """A function that returns the number of months from date of birth to FRA based on SSA chart"""
 
+    # Declare global variable
+    global months_to_fra
+
     # If date of birth is 1/1/1938 or earlier, full retirement age (FRA) is 65
     if z < datetime.date(1938, 1, 2):
         months_to_fra = 780
@@ -119,12 +122,14 @@ def fra_months(z): # Apologies, this function is verbose--function modeled after
     else:
         months_to_fra = 804
 
-    global months_to_fra
     return months_to_fra
 
 
 def fra_month_year(e):
     """A function that returns MM/YYYY of user's full retirement age (FRA)"""
+
+    # Declare global variable
+    global fra_mmYYYY
 
     # Calculate year of full retirement age (FRA)
     fra_year = fra_dob.year + (months_to_fra // 12)
@@ -141,7 +146,6 @@ def fra_month_year(e):
         # Convert date string to date object
         fra_mmYYYY = datetime.datetime.strptime(string_fra_mmYYYY, "%m/%Y").date()
 
-        global fra_mmYYYY
         return fra_mmYYYY
 
     # Make sure month of FRA is between 1 and 12 (a valid calendar month)
@@ -156,7 +160,6 @@ def fra_month_year(e):
         # Convert date string to date object
         fra_mmYYYY = datetime.datetime.strptime(string_fra_mmYYYY, "%m/%Y").date()
 
-        global fra_mmYYYY
         return fra_mmYYYY
 
 
@@ -187,8 +190,7 @@ def test_pia_input(f):
 
     # Test user input for valid PIA input
     try:
-        valid_pia = Decimal(f)
-        convert_to_decimal(valid_pia)
+        convert_to_decimal(f)
     except:
         print("\nSorry, that's not a valid PIA amount. You must use the $XXXX.xx format.")
         input("\nPress the ENTER key to try again.\n>>>")
@@ -199,7 +201,7 @@ def convert_to_decimal(g):
     """A function that converts PIA to a Decimal type"""
 
     global ssa_pia
-    ssa_pia = Decimal(g)
+    ssa_pia = Decimal(g)#.quantize(Decimal(.01),rounding=ROUND_DOWN)
 
     global string_ssa_pia
     string_ssa_pia = str(ssa_pia)
