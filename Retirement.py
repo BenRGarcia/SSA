@@ -64,8 +64,8 @@ def convert_to_fra_dob(c):
     string_fra_dob = str(fra_dob)
 
 
-def months_to_fra(z): # Apologies, this function is verbose--function modeled after SSA regulations
-    """A function that returns the number of months to SSA full retirement age (FRA) based on chart"""
+def fra_months(z): # Apologies, this function is verbose--function modeled after SSA regulations
+    """A function that returns the number of months from date of birth to FRA based on SSA chart"""
 
     # If date of birth is 1/1/1938 or earlier, full retirement age (FRA) is 65
     if z < datetime.date(1938, 1, 2):
@@ -119,27 +119,45 @@ def months_to_fra(z): # Apologies, this function is verbose--function modeled af
     else:
         months_to_fra = 804
 
+    global months_to_fra
     return months_to_fra
 
 
-def fra_mm_yyyy(e):
+def fra_month_year(e):
     """A function that returns MM/YYYY of user's full retirement age (FRA)"""
 
     # Calculate year of full retirement age (FRA)
     fra_year = fra_dob.year + (months_to_fra // 12)
 
-    # Calculate FRA month, make sure it's between 1 and 12 (a valid calendar month)
+    # Make sure month of FRA is between 1 and 12 (a valid calendar month)
     if (fra_dob.month + (e % 12)) <= 12:
-        fra_month = fra_dob.month + (e % 12)
-        fra_mm_yy = str(fra_month) + "/" + str(fra_year) # Concatenate string to later convert to date object
-        fra_mm_yy_date_obj = datetime.datetime.strptime(fra_mm_yy, "%m/%Y").date()
-        return fra_mm_yy_date_obj
 
+        # Calculate month of FRA
+        fra_month = fra_dob.month + (e % 12)
+
+        # Concatenate string to convert to date object
+        string_fra_mmYYYY = str(fra_month) + "/" + str(fra_year)
+
+        # Convert date string to date object
+        fra_mmYYYY = datetime.datetime.strptime(string_fra_mmYYYY, "%m/%Y").date()
+
+        global fra_mmYYYY
+        return fra_mmYYYY
+
+    # Make sure month of FRA is between 1 and 12 (a valid calendar month)
     else:
+
+        # Calculate month of FRA
         fra_month = fra_dob.month + (e % 12) - 12
-        fra_mm_yy = str(fra_month) + "/" + str(fra_year) # Concatenate string to later convert to date object
-        fra_mm_yy_date_obj = datetime.datetime.strptime(fra_mm_yy, "%m/%Y").date()
-        return fra_mm_yy_date_obj
+
+        # Concatenate string to convert to date object
+        string_fra_mmYYYY = str(fra_month) + "/" + str(fra_year)
+
+        # Convert date string to date object
+        fra_mmYYYY = datetime.datetime.strptime(string_fra_mmYYYY, "%m/%Y").date()
+
+        global fra_mmYYYY
+        return fra_mmYYYY
 
 
 def dob_engine():
@@ -207,24 +225,28 @@ def pia_engine():
 #def benefit_matrix():
     """A function that presents the SSA Retirement benefit matrix"""
 
-#def program_engine():
+def program_engine():
     """A function that runs the show for this program"""
 
-# Print introduction .txt to terminal
-introduction(file_1)
+    # Print introduction .txt to terminal
+    introduction(file_1)
 
-# Call function that asks user for valid date of birth value until one is given
-dob_engine()
+    # Call function that asks user for valid date of birth value until one is given
+    dob_engine()
 
-# Call function that calculates how many months until full retirement age (FRA)
-months_to_fra = months_to_fra(fra_dob)
+    # Call function that calculates how many months until full retirement age (FRA)
+    fra_months(fra_dob)
 
-# Call function that adds month to (FRA) to the SSA date of birth (fra_dob)
-fra_mm_yy_date_obj = fra_mm_yyyy(months_to_fra)
+    # Call function that adds month to (FRA) to the SSA date of birth (fra_dob)
+    fra_month_year(months_to_fra)
 
-pia_engine()
+    pia_engine()
 
-print("\033c")
-print("According to SSA, based on your date of birth:", actual_dob.strftime("%B %d, %Y"))
-print ("\nYour full retirement age is:\n\n\t\t" + fra_mm_yy_date_obj.strftime('%B %Y'))
-print("\nAnd your Primary Insurance Amount is:\n\n\t\t$" + string_ssa_pia)
+    print("\033c")
+    print("According to SSA, based on your date of birth:", actual_dob.strftime("%B %d, %Y"))
+    print ("\nYour full retirement age is:\n\n\t\t" + fra_mmYYYY.strftime('%B %Y'))
+    print("\nAnd your Primary Insurance Amount is:\n\n\t\t$" + string_ssa_pia)
+
+
+# Call function that runs the program
+program_engine()
