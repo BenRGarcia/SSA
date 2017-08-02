@@ -2,7 +2,6 @@
 # Run this program in BASH with: $ python3 Retirement.py welcome.txt
 
 import datetime
-from decimal import Decimal
 from sys import argv
 script, file_1 = argv
 
@@ -11,7 +10,7 @@ def introduction(a):
     """A function that introduces the program"""
 
     # Clear the user's terminal screen
-    #print("\033c")
+    print("\033c")
 
     # Open .txt file, print to terminal, close .txt file
     open_a = open(a)
@@ -190,21 +189,21 @@ def test_pia_input(f):
 
     # Test user input for valid PIA input
     try:
-        convert_to_decimal(f)
+        convert_to_float(f)
     except:
         print("\nSorry, that's not a valid PIA amount. You must use the $XXXX.xx format.")
         input("\nPress the ENTER key to try again.\n>>>")
         pia_input()
 
 
-def convert_to_decimal(g):
+def convert_to_float(g):
     """A function that converts PIA to a Decimal type"""
 
     global ssa_pia
-    ssa_pia = Decimal(g)#.quantize(Decimal(.01),rounding=ROUND_DOWN)
+    ssa_pia = float(g)
 
     global string_ssa_pia
-    string_ssa_pia = str(ssa_pia)
+    string_ssa_pia = '{:,.0f}'.format(ssa_pia)
 
 
 def pia_engine():
