@@ -178,7 +178,8 @@ def pia_input():
     print("\033c")
 
     # Get user input of Primary Insurance Amount (PIA)
-    pia = input("What is your Primary Insurance Amount (PIA) according to SSA? ($XXXX.xx)\n>>> $")
+    print("According to SSA, what is the estimated benefit amount you would receive \nat your full retirement age?")
+    pia = input("Note: you must use the format: $XXXX\n>>> $")
 
     # Call function that tests for valid PIA
     test_pia_input(pia)
@@ -189,21 +190,21 @@ def test_pia_input(f):
 
     # Test user input for valid PIA input
     try:
-        convert_to_float(f)
+        convert_to_int(f)
     except:
-        print("\nSorry, that's not a valid PIA amount. You must use the $XXXX.xx format.")
+        print("\nSorry, that's not a valid amount. You must use the $XXXX format.")
         input("\nPress the ENTER key to try again.\n>>>")
         pia_input()
 
 
-def convert_to_float(g):
+def convert_to_int(g):
     """A function that converts PIA to a Decimal type"""
 
     global ssa_pia
-    ssa_pia = float(g)
-
     global string_ssa_pia
-    string_ssa_pia = '{:,.0f}'.format(ssa_pia)
+
+    ssa_pia = int(g)
+    string_ssa_pia = str('{:,.0f}'.format(ssa_pia))
 
 
 def pia_engine():
