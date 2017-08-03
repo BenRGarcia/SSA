@@ -127,11 +127,15 @@ def fra_months(z): # Apologies, this function is verbose--function modeled after
 def fra_month_year(e):
     """A function that returns MM/YYYY of user's full retirement age (FRA)"""
 
-    # Declare global variable
+    # Declare global variables
+    global age_fra_year
     global fra_mmYYYY
+    global remainder_months
 
     # Calculate year of full retirement age (FRA)
     fra_year = fra_dob.year + (months_to_fra // 12)
+    remainder_months = months_to_fra % 12
+    age_fra_year = months_to_fra // 12
 
     # Make sure month of FRA is between 1 and 12 (a valid calendar month)
     if (fra_dob.month + (e % 12)) <= 12:
@@ -246,8 +250,9 @@ def program_engine():
 
     print("\033c")
     print("According to SSA, based on your date of birth:", actual_dob.strftime("%B %d, %Y"))
-    print ("\nYour full retirement age is:\n\n\t\t" + fra_mmYYYY.strftime('%B %Y'))
-    print("\nAnd your Primary Insurance Amount is:\n\n\t\t$" + string_ssa_pia)
+    print ("\nYour full retirement age is:\t" + fra_mmYYYY.strftime('%B %Y'))
+    print("\t\t(when you are age %s and %s months old.)" % (age_fra_year, remainder_months))
+    print("\nAnd your 'Primary Insurance Amount' is:\t$%s\n\n" % string_ssa_pia)
 
 
 # Call function that runs the program
