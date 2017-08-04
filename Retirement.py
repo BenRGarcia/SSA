@@ -4,6 +4,7 @@
 import datetime
 from sys import argv
 script, file_1 = argv
+import ReductionFactorDict
 
 
 def introduction(a):
@@ -205,9 +206,9 @@ def convert_to_int(g):
     """A function that converts PIA to a Decimal type"""
 
     global ssa_pia
-    global string_ssa_pia
-
     ssa_pia = int(g)
+
+    global string_ssa_pia
     string_ssa_pia = str('{:,.0f}'.format(ssa_pia))
 
 
@@ -221,15 +222,52 @@ def pia_engine():
 
 
 # Step 4 - Perform Calculations
-#def calculations():
-    """A function that calculates SSA Retirement benefit matrix"""
-    # Integrate use of "fraction" module?
-    # Account for SSA's rounding
-    # Send results to .txt file?
+def mba_calc():
+    """A function that calculates the SSA Retirement benefit matrix"""
 
-# Step 5 - Present the benefit estimate in a comprehensible format
-#def benefit_matrix():
-    """A function that presents the SSA Retirement benefit matrix"""
+    # Clear the user's terminal screen
+    print("\033c")
+
+    print("According to SSA, based on your date of birth of:", actual_dob.strftime("%B %d, %Y"))
+    print("Your full retirement age is:", fra_mmYYYY.strftime('%B %Y'))
+
+    input("\nPress the ENTER key to continue\n>>>")
+    # Clear the user's terminal screen
+    print("\033c")
+
+    print("\nIf you file for SSA RIB effective with", fra_mmYYYY.strftime('%B %Y'))
+    print("Your full retirement age benefit would be:$" + string_ssa_pia)
+
+    input("\nPress the ENTER key to see all possible months and their corresponding benefit amounts\n>>>")
+    # Clear the user's terminal screen
+    print("\033c")
+    
+    print("If you file 1 month early, your MBA would be about ${:.2f}".format(ssa_pia * ReductionFactorDict.reduction_factors[0][1] // 1))
+
+    # increment print statement
+    rf = 2
+
+    # Account for SSA's throughout the month rule
+    if fra_dob.day >= 2:
+        # distance (in months) of age 62 to FRA
+        early_to_fra_count = months_to_fra - 745
+        early_to_fra_count_list = ReductionFactorDict.reduction_factors[1:early_to_fra_count]
+
+        for orf in early_to_fra_count_list:
+            print("If you file", rf, "months early, your MBA would be about ${:.2f}".format(ssa_pia * orf[1] // 1))
+            rf += 1
+            early_to_fra_count -= 1
+
+    else:
+        # distance (in months) of age 62 to FRA
+        early_to_fra_count = months_to_fra - 744
+        early_to_fra_count_list = ReductionFactorDict.reduction_factors[1:early_to_fra_count]
+
+        for orf in early_to_fra_count_list:
+            print("If you file", rf, "months early, your MBA would be about ${:.2f}".format(ssa_pia * orf[1] // 1))
+            rf += 1
+            early_to_fra_count -= 1
+
 
 def program_engine():
     """A function that runs the show for this program"""
@@ -248,11 +286,7 @@ def program_engine():
 
     pia_engine()
 
-    print("\033c")
-    print("According to SSA, based on your date of birth:", actual_dob.strftime("%B %d, %Y"))
-    print ("\nYour full retirement age is:\t" + fra_mmYYYY.strftime('%B %Y'))
-    print("\t\t(when you are age %s and %s months old.)" % (age_fra_year, remainder_months))
-    print("\nAnd your 'Primary Insurance Amount' is:\t$%s\n\n" % string_ssa_pia)
+    mba_calc()
 
 
 # Call function that runs the program
