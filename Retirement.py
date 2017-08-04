@@ -221,7 +221,6 @@ def pia_engine():
             break
 
 
-# Step 4 - Perform Calculations
 def mba_calc():
     """A function that calculates the SSA Retirement benefit matrix"""
 
@@ -241,7 +240,7 @@ def mba_calc():
     input("\nPress the ENTER key to see all possible months and their corresponding benefit amounts\n>>>")
     # Clear the user's terminal screen
     print("\033c")
-    
+
     print("If you file 1 month early, your MBA would be about ${:.2f}".format(ssa_pia * ReductionFactorDict.reduction_factors[0][1] // 1))
 
     # increment print statement
