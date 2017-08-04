@@ -283,8 +283,10 @@ def program_engine():
     # Call function that adds month to (FRA) to the SSA date of birth (fra_dob)
     fra_month_year(months_to_fra)
 
+    # Call function that asks user for valid FRA/PIA amount until one is given
     pia_engine()
 
+    # Call function that calculates and prints all possible benefit amounts
     mba_calc()
 
 
